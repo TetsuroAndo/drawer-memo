@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="col-sm-6">
+    <strong>Image:</strong>
+    <% if @emoji.image? %>
+      <%= image_tag @emoji.image.url, class: "img-fluid" %>
+    <% else %>
+      no-image的な
+    <% end %>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_emoji_path(@emoji) %> |
+<%= link_to 'Back', emojis_path %>

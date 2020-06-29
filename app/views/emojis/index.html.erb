@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Emojis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @emojis.each do |emoji| %>
+      <tr>
+        <td><%= image_tag emoji.image.thumb.url if emoji.image? %></td>
+        <td><%= link_to 'Show', emoji %></td>
+        <td><%= link_to 'Edit', edit_emoji_path(emoji) %></td>
+        <td><%= link_to 'Destroy', emoji, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<ul>
+  <li><%= link_to 'New Emoji', new_emoji_path %></li>
+  <li><%= link_to 'Back', root_url %></li>
+</ul>

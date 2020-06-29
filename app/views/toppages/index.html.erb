@@ -1,4 +1,45 @@
-<div class="text-center">
-  <h1>Drawer Memo</h1>
-  <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
-</div>
+<%if logged_in? %>
+  
+  
+  <%= link_to 'emoji一覧', emojis_path %>
+  <p id="notice"><%= notice %></p>
+  <h1>Memos</h1>
+  
+  <% if current_user.memos.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Emoji</th>
+          <th>Title</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <% @memos.each do |memo| %>
+          <tr>
+            <td><%= image_tag memo.emoji.image.thumb.url if memo.emoji.image? %></td>
+            <td><%= memo.title %></td>
+            <td><%= link_to 'Show', memo %></td>
+            <td><%= link_to 'Edit', edit_memo_path(memo) %></td>
+            <td><%= link_to 'Destroy', memo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    メモはまだありません
+  <% end %>
+  
+  <% if current_user.emojis.any? %>
+    <%= link_to 'New Memo', new_memo_path %>
+  <% else %>
+    絵文字が１つ以上登録されるとメモを作る事ができます。
+  <% end %>
+  <br>
+<% else %>
+  <div class="text-center">
+    <h1>Drawer Memo</h1>
+    <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
+  </div>
+<% end %>

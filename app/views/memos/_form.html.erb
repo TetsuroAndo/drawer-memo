@@ -1,0 +1,42 @@
+<%= form_with(model: memo, local: true) do |form| %>
+  <% if memo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(memo.errors.count, "error") %> prohibited this memo from being saved:</h2>
+
+      <ul>
+      <% memo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :emoji_id, "絵文字を選択" %><br>
+    <div class="radio_box">
+      <%= form.collection_radio_buttons :emoji_id, emojis, :id, :image do |b| %>
+        <%= b.label { b.radio_button } %><%= image_tag b.object.image.thumb.url %>
+      <% end %>
+    </div>
+  </div>
+  
+  <style>
+    .radio_box {
+      overflow-y: scroll;
+      height: 5rem;
+    }
+  </style>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.text_area :content %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

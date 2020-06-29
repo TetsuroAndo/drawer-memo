@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_17_121734) do
+ActiveRecord::Schema.define(version: 2020_06_24_013525) do
+
+  create_table "emojis", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "image"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_emojis_on_user_id"
+  end
+
+  create_table "memos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "emoji_id"
+    t.string "title"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["emoji_id"], name: "index_memos_on_emoji_id"
+    t.index ["user_id"], name: "index_memos_on_user_id"
+  end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -20,4 +39,7 @@ ActiveRecord::Schema.define(version: 2020_05_17_121734) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "emojis", "users"
+  add_foreign_key "memos", "emojis"
+  add_foreign_key "memos", "users"
 end
